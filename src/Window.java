@@ -8,6 +8,8 @@ public class Window extends JFrame implements Runnable {
     private Graphics2D g2d;
     private KListener keyListener = new KListener();
 
+    private Rect playerOne, ai, ball;
+
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         this.setTitle(Constants.TITLE);
@@ -16,17 +18,20 @@ public class Window extends JFrame implements Runnable {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(keyListener);
         g2d = (Graphics2D)this.getGraphics();
+
+        playerOne = new Rect(Constants.HZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+        ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+        ball = new Rect(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, Constants.BALL_WIDTH, Constants.BALL_WIDTH, Constants.PADDLE_COLOR);
     }
 
     public void update(double dt) {
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
-            System.out.println("User pressed up.");
-        } else if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
-            System.out.println("Down");
-        }
+        playerOne.draw(g2d);
+        ai.draw(g2d);
+        ball.draw(g2d);
+
     }
 
     @Override
