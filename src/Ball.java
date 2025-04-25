@@ -6,10 +6,15 @@ public class Ball {
     private double vy = 10.0;
     private double vx = -200.0;
 
-    public Ball(Rect rect, Rect leftPaddle, Rect rightPaddle) {
+    public Text leftScoreText;
+    public Text rightScoreText;
+
+    public Ball(Rect rect, Rect leftPaddle, Rect rightPaddle, Text leftScoreText, Text rightScoreText) {
         this.rect = rect;
         this.leftPaddle = leftPaddle;
         this.rightPaddle = rightPaddle;
+        this.leftScoreText = leftScoreText;
+        this.rightScoreText = rightScoreText;
     }
 
     public double calculateNewVelocityAngle(Rect paddle) {
@@ -63,5 +68,35 @@ public class Ball {
         // Update the positions
         this.rect.x += vx * dt;
         this.rect.y += vy * dt;
+
+        if (this.rect.x + this.rect.width < leftPaddle.x) {
+            int rightScore = Integer.parseInt(rightScoreText.text);
+            rightScore++;
+            rightScoreText.text = "" + rightScore;
+
+            this.rect.x = Constants.SCREEN_WIDTH / 2;
+            this.rect.y = Constants.SCREEN_HEIGHT / 2;
+            this.vx = -150;
+            this.vy = 10;
+
+            if (rightScore >= Constants.WIN_SCORE) {
+                System.out.println("Right player won.");
+            }
+        }
+        else if (this.rect.x > this.rect.width + rightPaddle.x) {
+            int leftScore = Integer.parseInt(leftScoreText.text);
+            leftScore++;
+            leftScoreText.text = "" + leftScore;
+
+            this.rect.x = Constants.SCREEN_WIDTH / 2;
+            this.rect.y = Constants.SCREEN_HEIGHT / 2;
+            this.vx = -150;
+            this.vy = 10;
+
+            if (leftScore >= Constants.WIN_SCORE) {
+                System.out.println("Left player won");
+            }
+        }
+
     }
 }

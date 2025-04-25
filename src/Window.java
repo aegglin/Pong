@@ -12,6 +12,11 @@ public class Window extends JFrame implements Runnable {
     private PlayerController playerController;
     private AIController aiController;
 
+    public Text leftScoreText;
+    public Text rightScoreText;
+
+
+
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         this.setTitle(Constants.TITLE);
@@ -28,10 +33,15 @@ public class Window extends JFrame implements Runnable {
 
         ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
 
+        leftScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE), Constants.TEXT_X_POS, Constants.TEXT_Y_POS);
+        rightScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE), Constants.SCREEN_WIDTH - Constants.TEXT_X_POS - Constants.TEXT_SIZE, Constants.TEXT_Y_POS);
+
         ballRect = new Rect(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, Constants.BALL_WIDTH, Constants.BALL_HEIGHT, Constants.PADDLE_COLOR);
-        ball = new Ball(ballRect, playerOne, ai);
+        ball = new Ball(ballRect, playerOne, ai, leftScoreText, rightScoreText);
 
         aiController = new AIController(new PlayerController(ai), ballRect);
+
+
     }
 
     public void update(double dt) {
@@ -50,6 +60,10 @@ public class Window extends JFrame implements Runnable {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+
+        leftScoreText.draw(g2d);
+        rightScoreText.draw(g2d);
+
         playerOne.draw(g2d);
         ai.draw(g2d);
         ball.rect.draw(g2d);
