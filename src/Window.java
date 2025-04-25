@@ -10,6 +10,7 @@ public class Window extends JFrame implements Runnable {
     private Rect playerOne, ai, ballRect;
     private Ball ball;
     private PlayerController playerController;
+    private AIController aiController;
 
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -24,10 +25,13 @@ public class Window extends JFrame implements Runnable {
 
         playerOne = new Rect(Constants.HZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
         playerController = new PlayerController(playerOne, keyListener);
+
         ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+
         ballRect = new Rect(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, Constants.BALL_WIDTH, Constants.BALL_HEIGHT, Constants.PADDLE_COLOR);
         ball = new Ball(ballRect, playerOne, ai);
 
+        aiController = new AIController(new PlayerController(ai), ballRect);
     }
 
     public void update(double dt) {
@@ -36,7 +40,9 @@ public class Window extends JFrame implements Runnable {
         Graphics dbg = dbImage.getGraphics();
         this.draw(dbg);
         g2d.drawImage(dbImage, 0, 0, this);
+
         playerController.update(dt);
+        aiController.update(dt);
         ball.update(dt);
     }
 

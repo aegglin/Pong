@@ -10,15 +10,30 @@ public class PlayerController {
         this.keyListener = keyListener;
     }
 
+    public PlayerController(Rect rect) {
+        this.rect = rect;
+        this.keyListener = null;
+    }
+
     public void update(double dt) {
-        if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
-            if ((this.rect.y + Constants.PADDLE_SPEED * dt) + rect.height < Constants.SCREEN_HEIGHT - Constants.INSETS_BOTTOM) {
-                this.rect.y += Constants.PADDLE_SPEED * dt;
+        if (keyListener != null) {
+            if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
+                moveDown(dt);
+            } else if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
+                moveUp(dt);
             }
-        } else if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
-            if ((this.rect.y - Constants.PADDLE_SPEED * dt) > Constants.TOOLBAR_HEIGHT) {
-                this.rect.y -= Constants.PADDLE_SPEED * dt;
-            }
+        }
+    }
+
+    public void moveUp(double dt) {
+        if ((this.rect.y - Constants.PADDLE_SPEED * dt) > Constants.TOOLBAR_HEIGHT) {
+            this.rect.y -= Constants.PADDLE_SPEED * dt;
+        }
+    }
+
+    public void moveDown(double dt) {
+        if ((this.rect.y + Constants.PADDLE_SPEED * dt) + rect.height < Constants.SCREEN_HEIGHT - Constants.INSETS_BOTTOM) {
+            this.rect.y += Constants.PADDLE_SPEED * dt;
         }
     }
 }
