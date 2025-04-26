@@ -15,7 +15,7 @@ public class Window extends JFrame implements Runnable {
     public Text leftScoreText;
     public Text rightScoreText;
 
-
+    public boolean isRunning = true;
 
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -42,6 +42,10 @@ public class Window extends JFrame implements Runnable {
         aiController = new AIController(new PlayerController(ai), ballRect);
 
 
+    }
+
+    public void stop() {
+        isRunning = false;
     }
 
     public void update(double dt) {
@@ -76,7 +80,7 @@ public class Window extends JFrame implements Runnable {
         double time;
         double deltaTime;
         //game loop
-        while (true) {
+        while (isRunning) {
             time = Time.getTime();
             deltaTime = time - lastFrameTime;
             lastFrameTime = time;
@@ -89,5 +93,7 @@ public class Window extends JFrame implements Runnable {
                 e.printStackTrace();
             }
         }
+        this.dispose();
+        return;
     }
 }

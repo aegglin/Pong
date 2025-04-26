@@ -4,7 +4,7 @@ public class Ball {
 
     //velocity x, y
     private double vy = 10.0;
-    private double vx = -200.0;
+    private double vx = -150.0;
 
     public Text leftScoreText;
     public Text rightScoreText;
@@ -80,7 +80,7 @@ public class Ball {
             this.vy = 10;
 
             if (rightScore >= Constants.WIN_SCORE) {
-                System.out.println("Right player won.");
+                Main.changeState(2);
             }
         }
         else if (this.rect.x > this.rect.width + rightPaddle.x) {
@@ -90,11 +90,11 @@ public class Ball {
 
             this.rect.x = Constants.SCREEN_WIDTH / 2;
             this.rect.y = Constants.SCREEN_HEIGHT / 2;
-            this.vx = -150;
+            this.vx = 150;
             this.vy = 10;
 
             if (leftScore >= Constants.WIN_SCORE) {
-                System.out.println("Left player won");
+                Main.changeState(2);
             }
         }
 
