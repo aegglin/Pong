@@ -94,6 +94,5 @@ public class Window extends JFrame implements Runnable {
             }
         }
         this.dispose();
-        return;
     }
 }
